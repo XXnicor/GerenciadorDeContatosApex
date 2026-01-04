@@ -33,24 +33,27 @@ Sistema de gerenciamento de contatos desenvolvido na plataforma Salesforce, util
 - **ESLint**: Linting e padronização de código
 
 ## 📋 Estrutura do Projeto
+
+```
 GerenciadorDeContatos/
 ├── force-app/
-│ └── main/
-│ └── default/
-│ ├── classes/
-│ │ ├── ContactController.cls # Controller Apex
-│ │ └── ContactController.cls-meta.xml
-│ └── lwc/
-│ └── contactTableRenamedNew/
-│ ├── contactTableRenamedNew.html # Template HTML
-│ ├── contactTableRenamedNew.js # Lógica JavaScript
-│ └── contactTableRenamedNew.js-meta.xml # Configuração do componente
+│   └── main/
+│       └── default/
+│           ├── classes/
+│           │   ├── ContactController.cls          # Controller Apex
+│           │   └── ContactController.cls-meta.xml
+│           └── lwc/
+│               └── contactTableRenamedNew/
+│                   ├── contactTableRenamedNew.html     # Template HTML
+│                   ├── contactTableRenamedNew.js       # Lógica JavaScript
+│                   └── contactTableRenamedNew.js-meta.xml  # Configuração do componente
 ├── config/
-│ └── project-scratch-def.json # Definição de scratch org
-├── jest.config.js # Configuração de testes
-├── eslint.config.js # Configuração de linting
-├── sfdx-project.json # Configuração do projeto Salesforce
-└── package.json # Dependências Node.js
+│   └── project-scratch-def.json                  # Definição de scratch org
+├── jest.config.js                                # Configuração de testes
+├── eslint.config.js                              # Configuração de linting
+├── sfdx-project.json                             # Configuração do projeto Salesforce
+└── package.json                                  # Dependências Node.js
+```
 
 ## 🚀 Como Executar o Projeto
 
@@ -67,52 +70,104 @@ GerenciadorDeContatos/
    ```bash
    git clone https://github.com/XXnicor/GerenciadorDeContatosApex.git
    cd GerenciadorDeContatosApex
-   npm install
-   sf auth:web:login -a MyOrgAlias
-   sf force:source:deploy -p force-app/main/default
-   sfdx force:org:open
+   ```
 
-   Configuração do Componente
-Navegue até uma página de registro de Account (Conta)
-Clique em ⚙️ Edit Page no canto superior direito
-Arraste o componente contactTableRenamedNew para a página
-Salve e ative a página
-📊 Campos Exibidos
+2. **Instale as dependências**
+   ```bash
+   npm install
+   ```
+
+3. **Autentique-se na sua org Salesforce**
+   ```bash
+   sfdx auth:web:login -a MyOrgAlias
+   ```
+
+4. **Faça o deploy do código para a org**
+   ```bash
+   sfdx force:source:deploy -p force-app/main/default
+   ```
+
+5. **Atribua permissões necessárias** (se aplicável)
+   ```bash
+   sfdx force:user:permset:assign -n <PermissionSetName>
+   ```
+
+6. **Abra a org no navegador**
+   ```bash
+   sfdx force:org:open
+   ```
+
+### Configuração do Componente
+
+1. Navegue até uma página de registro de Account (Conta)
+2. Clique em **⚙️ Edit Page** no canto superior direito
+3. Arraste o componente **contactTableRenamedNew** para a página
+4. Salve e ative a página
+
+## 📊 Campos Exibidos
+
 O componente exibe as seguintes informações dos contatos:
 
-Campo	Descrição	Tipo
-First Name	Primeiro nome do contato	Texto
-Email	Endereço de e-mail	Email
-Phone	Número de telefone	Telefone
-Job Title	Cargo/função do contato	Texto
+| Campo | Descrição | Tipo |
+|-------|-----------|------|
+| **First Name** | Primeiro nome do contato | Texto |
+| **Email** | Endereço de e-mail | Email |
+| **Phone** | Número de telefone | Telefone |
+| **Job Title** | Cargo/função do contato | Texto |
 
-🔧 Componentes Principais
-ContactController.cls (Apex)
+## 🔧 Componentes Principais
+
+### ContactController.cls (Apex)
+
+```apex
 @AuraEnabled(cacheable=true)
 public static List<Contact> getContactsByAccountsID(Id accountId) {
     return [SELECT Id, FirstName, LastName, Email, Phone, Title 
             FROM Contact 
             WHERE AccountId = :accountId];
 }
+```
 
-Características:
+**Características:**
+- `@AuraEnabled`: Expõe o método para componentes Lightning
+- `cacheable=true`: Permite cache no lado do cliente para melhor performance
+- Retorna lista de contatos filtrados por Account ID
 
-@AuraEnabled: Expõe o método para componentes Lightning
-cacheable=true: Permite cache no lado do cliente para melhor performance
-Retorna lista de contatos filtrados por Account ID
-contactTableRenamedNew.js (LWC)
-Funcionalidades principais:
+### contactTableRenamedNew.js (LWC)
 
-@api recordId: Recebe o ID do registro atual (Account)
-@wire: Sincronização reativa de dados com o Apex
-Tratamento de erros robusto
-Configuração de colunas da datatable
+**Funcionalidades principais:**
+- `@api recordId`: Recebe o ID do registro atual (Account)
+- `@wire`: Sincronização reativa de dados com o Apex
+- Tratamento de erros robusto
+- Configuração de colunas da datatable
 
-📈 Melhorias Futuras
- Implementar edição inline de registros
- Adicionar paginação para grandes volumes de dados
- Incluir filtros de busca e ordenação avançados
- Adicionar ações em massa (enviar emails, exportar, etc.)
- Implementar testes unitários completos com Jest
- Adicionar campo de pesquisa em tempo real
- Integrar com outras entidades relacionadas
+## 🧪 Testes
+
+Execute os testes unitários:
+
+```bash
+npm run test:unit
+```
+
+Execute os testes com cobertura:
+
+```bash
+npm run test:unit:coverage
+```
+
+## 📈 Melhorias Futuras
+
+- [ ] Implementar edição inline de registros
+- [ ] Adicionar paginação para grandes volumes de dados
+- [ ] Incluir filtros de busca e ordenação avançados
+- [ ] Adicionar ações em massa (enviar emails, exportar, etc.)
+- [ ] Implementar testes unitários completos com Jest
+- [ ] Adicionar campo de pesquisa em tempo real
+- [ ] Integrar com outras entidades relacionadas
+
+## 👤 Autor
+
+**Nicolas**
+
+- GitHub: [@XXnicor](https://github.com/XXnicor)
+- LinkedIn: [Seu LinkedIn](https://www.linkedin.com/in/nicolas-claudio-71038618b/)
