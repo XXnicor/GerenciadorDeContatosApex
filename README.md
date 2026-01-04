@@ -1,22 +1,118 @@
-<<<<<<< HEAD
-# Salesforce DX Project: Next Steps
+# 📇 Gerenciador de Contatos - Salesforce Lightning Web Component
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+[![Salesforce](https://img.shields.io/badge/Salesforce-LWC-00A1E0?style=flat-square&logo=salesforce)](https://developer.salesforce.com/docs/component-library/documentation/en/lwc)
+[![Apex](https://img.shields.io/badge/Apex-Class-0070D2?style=flat-square)](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 
-## How Do You Plan to Deploy Your Changes?
+## 🎯 Sobre o Projeto
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+Sistema de gerenciamento de contatos desenvolvido na plataforma Salesforce, utilizando Lightning Web Components (LWC) e Apex. O componente exibe de forma dinâmica e responsiva todos os contatos associados a uma conta específica, proporcionando uma experiência de usuário moderna e intuitiva.
 
-## Configure Your Salesforce DX Project
+## ✨ Funcionalidades
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+- 📊 **Visualização em Tabela**: Exibição organizada de contatos em formato de datatable
+- 🔄 **Atualização Automática**: Dados sincronizados em tempo real usando `@wire`
+- 🎨 **Interface Moderna**: Design responsivo seguindo o Salesforce Lightning Design System (SLDS)
+- ⚡ **Performance Otimizada**: Comunicação eficiente entre frontend (LWC) e backend (Apex)
+- 🔍 **Filtragem por Conta**: Visualização contextual de contatos por Account ID
 
-## Read All About It
+## 🛠️ Tecnologias Utilizadas
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
-=======
-# GerenciadorDeContatosApex
->>>>>>> e670224a51533feaf7e4e6a0a8c28177b60684a0
+### Frontend
+- **Lightning Web Components (LWC)**: Framework JavaScript moderno da Salesforce
+- **Salesforce Lightning Design System (SLDS)**: Sistema de design responsivo
+
+### Backend
+- **Apex**: Linguagem de programação nativa do Salesforce
+- **SOQL**: Salesforce Object Query Language para consultas de dados
+
+### Ferramentas de Desenvolvimento
+- **Salesforce CLI**: Gerenciamento e deploy de metadados
+- **VS Code**: IDE com extensões Salesforce
+- **Jest**: Framework de testes (configurado)
+- **ESLint**: Linting e padronização de código
+
+## 📋 Estrutura do Projeto
+GerenciadorDeContatos/
+├── force-app/
+│ └── main/
+│ └── default/
+│ ├── classes/
+│ │ ├── ContactController.cls # Controller Apex
+│ │ └── ContactController.cls-meta.xml
+│ └── lwc/
+│ └── contactTableRenamedNew/
+│ ├── contactTableRenamedNew.html # Template HTML
+│ ├── contactTableRenamedNew.js # Lógica JavaScript
+│ └── contactTableRenamedNew.js-meta.xml # Configuração do componente
+├── config/
+│ └── project-scratch-def.json # Definição de scratch org
+├── jest.config.js # Configuração de testes
+├── eslint.config.js # Configuração de linting
+├── sfdx-project.json # Configuração do projeto Salesforce
+└── package.json # Dependências Node.js
+
+## 🚀 Como Executar o Projeto
+
+### Pré-requisitos
+
+- [Salesforce CLI](https://developer.salesforce.com/tools/sfdxcli) instalado
+- [Node.js](https://nodejs.org/) (versão 14 ou superior)
+- [Visual Studio Code](https://code.visualstudio.com/) com extensões Salesforce
+- Conta de desenvolvedor Salesforce ou acesso a uma org
+
+### Instalação
+
+1. **Clone o repositório**
+   ```bash
+   git clone https://github.com/XXnicor/GerenciadorDeContatosApex.git
+   cd GerenciadorDeContatosApex
+   npm install
+   sf auth:web:login -a MyOrgAlias
+   sf force:source:deploy -p force-app/main/default
+   sfdx force:org:open
+
+   Configuração do Componente
+Navegue até uma página de registro de Account (Conta)
+Clique em ⚙️ Edit Page no canto superior direito
+Arraste o componente contactTableRenamedNew para a página
+Salve e ative a página
+📊 Campos Exibidos
+O componente exibe as seguintes informações dos contatos:
+
+Campo	Descrição	Tipo
+First Name	Primeiro nome do contato	Texto
+Email	Endereço de e-mail	Email
+Phone	Número de telefone	Telefone
+Job Title	Cargo/função do contato	Texto
+
+🔧 Componentes Principais
+ContactController.cls (Apex)
+@AuraEnabled(cacheable=true)
+public static List<Contact> getContactsByAccountsID(Id accountId) {
+    return [SELECT Id, FirstName, LastName, Email, Phone, Title 
+            FROM Contact 
+            WHERE AccountId = :accountId];
+}
+
+Características:
+
+@AuraEnabled: Expõe o método para componentes Lightning
+cacheable=true: Permite cache no lado do cliente para melhor performance
+Retorna lista de contatos filtrados por Account ID
+contactTableRenamedNew.js (LWC)
+Funcionalidades principais:
+
+@api recordId: Recebe o ID do registro atual (Account)
+@wire: Sincronização reativa de dados com o Apex
+Tratamento de erros robusto
+Configuração de colunas da datatable
+
+📈 Melhorias Futuras
+ Implementar edição inline de registros
+ Adicionar paginação para grandes volumes de dados
+ Incluir filtros de busca e ordenação avançados
+ Adicionar ações em massa (enviar emails, exportar, etc.)
+ Implementar testes unitários completos com Jest
+ Adicionar campo de pesquisa em tempo real
+ Integrar com outras entidades relacionadas
