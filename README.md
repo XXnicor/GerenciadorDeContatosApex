@@ -186,7 +186,7 @@ Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes
 **Nicolas**
 
 - GitHub: [@XXnicor](https://github.com/XXnicor)
-- LinkedIn: [Seu LinkedIn](https://www.linkedin.com/in/seu-perfil)
+- LinkedIn:(https://www.linkedin.com/in/nicolas-claudio-71038618b)
 
 ## 🙏 Agradecimentos
 
