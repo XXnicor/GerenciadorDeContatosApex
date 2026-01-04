@@ -8,6 +8,8 @@
 
 Sistema de gerenciamento de contatos desenvolvido na plataforma Salesforce, utilizando Lightning Web Components (LWC) e Apex. O componente exibe de forma dinâmica e responsiva todos os contatos associados a uma conta específica, proporcionando uma experiência de usuário moderna e intuitiva.
 
+![Screenshot do Componente](images\Print org.png)
+
 ## ✨ Funcionalidades
 
 - 📊 **Visualização em Tabela**: Exibição organizada de contatos em formato de datatable
