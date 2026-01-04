@@ -1,0 +1,17 @@
+<template>
+    <div>
+        <lightning-card title="Contacts">
+            <lightning-datatable
+                key-field="Id"
+                data={data}
+                columns={columns}
+            ></lightning-datatable>
+        </lightning-card>
+    </div>
+
+    <template if:true={error}>
+        <p class="slds-text-color_error">
+            Erro ao retornar contatos: {error}
+        </p>
+    </template>
+</template>

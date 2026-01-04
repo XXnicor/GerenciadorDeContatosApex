@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Deploy LWC Component",
+			"type": "shell",
+			"command": "sfdx force:source:deploy --sourcepath force-app/main/default/lwc/contactTable",
+			"args": [],
+			"isBackground": false,
+			"problemMatcher": []
+		}
+	]
+}
